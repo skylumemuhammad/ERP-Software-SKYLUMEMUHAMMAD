@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}Create/Edit Sales Voucher{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-primary fw-bold">
+        {% if voucher %}Edit Sales Voucher{% else %}Create Sales Voucher{% endif %}
+    </h2>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <form method="post">
+                <div class="row mb-4 g-3">
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">Sales Prefix</label>
+                        <input type="text" name="prefix" class="form-control" value="{{ voucher.prefix if voucher else 'SV-' }}" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">Voucher Date</label>
+                        <input type="date" name="date" class="form-control" value="{{ voucher.date.strftime('%Y-%m-%d') if voucher else today }}" required>
+                    </div>
+                </div>
+
+                <h5 class="mt-4">Transaction Lines</h5>
+                <div id="lines-container">
+                    {% if voucher and voucher.lines %}
+                        {% for line in voucher.lines %}
+                        <div class="row mb-3 transaction-line align-items-end">
+                            <div class="col-md-4">
+                                <select name="account" class="form-select" required>
+                                    <option value="">-- Select Account --</option>
+                                    {% for acc in accounts %}
+                                    <option value="{{ acc.code }}" {% if line.account == acc.code %}selected{% endif %}>
+                                        {{ acc.name }} ({{ acc.code }})
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="description" class="form-control" value="{{ line.description }}" placeholder="Description (e.g. Sales to Customer - Invoice #123)">
+                            </div>
+                            <div class="col-md-2">
+                                <input type="number" name="debit" class="form-control debit" value="{{ line.debit }}" placeholder="Debit" step="0.01">
+                            </div>
+                            <div class="col-md-2">
+                                <input type="number" name="credit" class="form-control credit" value="{{ line.credit }}" placeholder="Credit" step="0.01">
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-danger btn-sm remove-line">Remove</button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <!-- Default empty line -->
+                        <div class="row mb-3 transaction-line align-items-end">
+                            <div class="col-md-4">
+                                <select name="account" class="form-select" required>
+                                    <option value="">-- Select Account --</option>
+                                    {% for acc in accounts %}
+                                    <option value="{{ acc.code }}">{{ acc.name }} ({{ acc.code }})</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="description" class="form-control" placeholder="Description">
+                            </div>
+                            <div class="col-md-2">
+                                <input type="number" name="debit" class="form-control debit" placeholder="Debit" step="0.01" value="0">
+                            </div>
+                            <div class="col-md-2">
+                                <input type="number" name="credit" class="form-control credit" placeholder="Credit" step="0.01" value="0">
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-danger btn-sm remove-line">Remove</button>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-12 text-end">
+                        <button type="button" id="add-line" class="btn btn-success">Add Line</button>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <h5>Total</h5>
+                        <p><strong>Total Debit:</strong> <span id="total-debit">0.00</span></p>
+                        <p><strong>Total Credit:</strong> <span id="total-credit">0.00</span></p>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <button type="submit" class="btn btn-primary btn-lg">Save Sales Voucher</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for dynamic lines and totals -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const container = document.getElementById('lines-container');
+    const addLineBtn = document.getElementById('add-line');
+
+    // Add new line
+    addLineBtn.addEventListener('click', function () {
+        const line = document.createElement('div');
+        line.className = 'row mb-3 transaction-line align-items-end';
+        line.innerHTML = `
+            <div class="col-md-4">
+                <select name="account" class="form-select" required>
+                    <option value="">-- Select Account --</option>
+                    {% for acc in accounts %}
+                    <option value="{{ acc.code }}">{{ acc.name }} ({{ acc.code }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="description" class="form-control" placeholder="Description">
+            </div>
+            <div class="col-md-2">
+                <input type="number" name="debit" class="form-control debit" placeholder="Debit" step="0.01" value="0">
+            </div>
+            <div class="col-md-2">
+                <input type="number" name="credit" class="form-control credit" placeholder="Credit" step="0.01" value="0">
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-danger btn-sm remove-line">Remove</button>
+            </div>
+        `;
+        container.appendChild(line);
+        updateTotals();
+    });
+
+    // Remove line
+    container.addEventListener('click', function (e) {
+        if (e.target.classList.contains('remove-line')) {
+            e.target.closest('.transaction-line').remove();
+            updateTotals();
+        }
+    });
+
+    // Update totals on input change
+    container.addEventListener('input', updateTotals);
+
+    function updateTotals() {
+        let totalDebit = 0;
+        let totalCredit = 0;
+
+        document.querySelectorAll('.debit').forEach(input => {
+            totalDebit += parseFloat(input.value) || 0;
+        });
+
+        document.querySelectorAll('.credit').forEach(input => {
+            totalCredit += parseFloat(input.value) || 0;
+        });
+
+        document.getElementById('total-debit').textContent = totalDebit.toFixed(2);
+        document.getElementById('total-credit').textContent = totalCredit.toFixed(2);
+    }
+
+    // Initial totals
+    updateTotals();
+});
+</script>
+{% endblock %}

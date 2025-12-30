@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}View {{ vtype }} Voucher{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-primary fw-bold">View {{ vtype }} Voucher - {{ voucher.prefix }}</h2>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <strong>Voucher No:</strong> {{ voucher.prefix }}
+                </div>
+                <div class="col-md-4">
+                    <strong>Date:</strong> {{ voucher.date.strftime('%d/%m/%Y') }}
+                </div>
+                <div class="col-md-4">
+                    <strong>Added By:</strong> {{ voucher.added_by }}
+                </div>
+            </div>
+
+            {% if voucher.cheque_no or voucher.cheque_date %}
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <strong>Cheque No:</strong> {{ voucher.cheque_no or 'N/A' }}
+                </div>
+                <div class="col-md-6">
+                    <strong>Cheque Date:</strong> {{ voucher.cheque_date.strftime('%d/%m/%Y') if voucher.cheque_date else 'N/A' }}
+                </div>
+            </div>
+            {% endif %}
+
+            <h5 class="mt-4">Transaction Lines</h5>
+            <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>Account</th>
+                        <th>Description</th>
+                        <th class="text-end">Debit</th>
+                        <th class="text-end">Credit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for line in voucher.lines %}
+                    <tr>
+                        <td>{{ get_account_name(line.account) }} ({{ line.account }})</td>
+                        <td>{{ line.description or 'N/A' }}</td>
+                        <td class="text-end">{{ line.debit|round(2) if line.debit > 0 else '' }}</td>
+                        <td class="text-end">{{ line.credit|round(2) if line.credit > 0 else '' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="text-end mt-3">
+                <strong>Total Debit:</strong> {{ voucher.lines|sum(attribute='debit')|round(2) }}
+                <br>
+                <strong>Total Credit:</strong> {{ voucher.lines|sum(attribute='credit')|round(2) }}
+            </div>
+
+            <div class="mt-4 text-center no-print">
+                <a href="javascript:window.print()" class="btn btn-primary">Print Voucher</a>
+                <a href="{{ url_for('vouchers.voucher_list', vtype=vtype_lower) }}" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    body {
+        background: white;
+    }
+}
+</style>
+{% endblock %}

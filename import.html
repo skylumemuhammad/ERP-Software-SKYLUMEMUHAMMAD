@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Import Chart of Accounts{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-primary fw-bold">Import Chart of Accounts from Excel</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Upload Excel File</h5>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-info">
+                <strong>Instructions:</strong>
+                <ul class="mb-0">
+                    <li>File format: <strong>.xlsx</strong> (Excel 2007 or newer)</li>
+                    <li>Required columns: <strong>code</strong>, <strong>name</strong></li>
+                    <li>Optional columns: <strong>parent_code</strong>, <strong>is_group</strong> (True/False or 1/0)</li>
+                    <li>First row should be headers</li>
+                    <li>No empty rows in between</li>
+                    <li><strong>Warning:</strong> This will replace all existing accounts!</li>
+                </ul>
+            </div>
+
+            <form method="post" enctype="multipart/form-data">
+                <div class="mb-4">
+                    <label for="file" class="form-label fw-bold">Select Excel File</label>
+                    <input type="file" name="file" id="file" class="form-control form-control-lg" accept=".xlsx,.xls" required>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success btn-lg px-5">Import Chart of Accounts</button>
+                    <a href="{{ url_for('chart.manage_accounts') }}" class="btn btn-secondary btn-lg px-5 ms-3">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <h5 class="text-muted">Example Excel Format:</h5>
+        <table class="table table-bordered table-sm w-auto">
+            <thead class="table-light">
+                <tr>
+                    <th>code</th>
+                    <th>name</th>
+                    <th>parent_code</th>
+                    <th>is_group</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1000</td>
+                    <td>Assets</td>
+                    <td></td>
+                    <td>True</td>
+                </tr>
+                <tr>
+                    <td>1100</td>
+                    <td>Current Assets</td>
+                    <td>1000</td>
+                    <td>True</td>
+                </tr>
+                <tr>
+                    <td>1110</td>
+                    <td>Cash in Hand</td>
+                    <td>1100</td>
+                    <td>False</td>
+                </tr>
+                <tr>
+                    <td>2000</td>
+                    <td>Liabilities</td>
+                    <td></td>
+                    <td>True</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

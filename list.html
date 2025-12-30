@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}{{ vtype }} Vouchers{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-primary fw-bold">{{ vtype }} Vouchers List</h2>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Voucher No</th>
+                            <th>Date</th>
+                            <th>Added By</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for v in vouchers %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ v.prefix }}</td>
+                            <td>{{ v.date.strftime('%d/%m/%Y') }}</td>
+                            <td>{{ v.added_by }}</td>
+                            <td>
+                                <a href="{{ url_for('vouchers.view_voucher', vtype=vtype_lower, index=loop.index0) }}" class="btn btn-info btn-sm">View</a>
+                                <a href="{{ url_for('vouchers.edit_voucher', vtype=vtype_lower, index=loop.index0) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <form method="post" action="{{ url_for('vouchers.delete_voucher', vtype=vtype_lower, index=loop.index0) }}" class="d-inline" onclick="return confirm('Delete this voucher?')">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% if not vouchers %}
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">No vouchers found.</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{{ url_for('vouchers.create_voucher', vtype=vtype_lower) }}" class="btn btn-success btn-lg">Create New {{ vtype }} Voucher</a>
+    </div>
+</div>
+{% endblock %}

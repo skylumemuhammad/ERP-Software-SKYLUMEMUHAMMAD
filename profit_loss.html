@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Profit & Loss Statement{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-success fw-bold">Profit & Loss Statement</h2>
+
+    <div class="card shadow-sm mb-5">
+        <div class="card-body">
+            <form method="post">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Start Date</label>
+                        <input type="date" name="start" class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">End Date</label>
+                        <input type="date" name="end" class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-success btn-lg">Generate Report</button>
+                    </div>
+                </div>
+
+                {% if data %}
+                <div class="row mt-4">
+                    <div class="col">
+                        <button type="submit" name="export" value="1" class="btn btn-success me-2">Export Excel</button>
+                        <button type="submit" name="export_pdf" value="1" class="btn btn-danger me-2">Export PDF</button>
+                        <button type="button" class="btn btn-info" onclick="window.print()">Print Report</button>
+                    </div>
+                </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+    {% if data %}
+    <div id="print-section">
+        <div class="text-center mb-5">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" width="120" class="mb-4">
+            <h2 class="fw-bold">SKYLUME MUHAMMAD (PRIVATE) LIMITED</h2>
+            <h3>Profit & Loss Statement</h3>
+            <p class="fs-5"><strong>For the period:</strong> {{ request.form.start }} to {{ request.form.end }}</p>
+            <hr class="border border-success border-3 opacity-75 w-75 mx-auto mb-5">
+        </div>
+
+        {{ data | safe }}
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        #print-section, #print-section * {
+            visibility: visible;
+        }
+        #print-section {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+        .navbar, form, .card {
+            display: none !important;
+        }
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Edit {{ voucher_type_name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-warning fw-bold">Edit {{ voucher_type_name }} - {{ voucher.prefix }}</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form method="post">
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">Voucher Prefix</label>
+                        <input type="text" name="prefix" value="{{ voucher.prefix }}" class="form-control" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">Date</label>
+                        <input type="date" name="date" value="{{ voucher.date.strftime('%Y-%m-%d') }}" class="form-control" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">Cheque Date (optional)</label>
+                        <input type="date" name="cheque_date" value="{{ voucher.cheque_date.strftime('%Y-%m-%d') if voucher.cheque_date else '' }}" class="form-control">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">Cheque No (optional)</label>
+                        <input type="text" name="cheque_no" value="{{ voucher.cheque_no }}" class="form-control">
+                    </div>
+                </div>
+
+                <h5 class="mb-3">Voucher Lines</h5>
+                <div id="lines">
+                    {% for line in voucher.lines %}
+                    <div class="row g-3 mb-3 line-row">
+                        <div class="col-md-4">
+                            <select name="account" class="form-control" required>
+                                <option value="">-- Select Account --</option>
+                                {% for acc in accounts %}
+                                <option value="{{ acc.code }}" {% if acc.code == line.account %}selected{% endif %}>
+                                    {{ acc.code }} - {{ acc.name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" name="description" value="{{ line.description }}" class="form-control" placeholder="Description" required>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="number" step="0.01" name="debit" value="{{ line.debit if line.debit > 0 else '' }}" class="form-control" placeholder="Debit">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="number" step="0.01" name="credit" value="{{ line.credit if line.credit > 0 else '' }}" class="form-control" placeholder="Credit">
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-warning btn-lg">Update Voucher</button>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary btn-lg ms-2">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
