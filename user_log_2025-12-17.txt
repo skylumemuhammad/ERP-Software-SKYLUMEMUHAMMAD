@@ -1,0 +1,5 @@
+[17/12/2025 19:11:03] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[17/12/2025 21:33:25] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[17/12/2025 21:57:43] admin: Created Sales Invoice SINV-0001
+[17/12/2025 22:01:36] admin: Created Sales Invoice SINV-0001
+[17/12/2025 22:11:10] admin: Created Purchase Invoice PINV-0001

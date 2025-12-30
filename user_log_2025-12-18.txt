@@ -1,0 +1,86 @@
+[18/12/2025 12:04:47] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 12:06:35] admin: Created Sales Voucher SV-001
+[18/12/2025 12:08:25] admin: Created Purchase Voucher PV-001
+[18/12/2025 12:14:08] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 12:14:58] admin: Created Sales Voucher SV-001
+[18/12/2025 12:18:37] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 12:19:25] admin: Created Sales Voucher SV-001
+[18/12/2025 12:27:02] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 12:27:58] admin: Created Sales Voucher SV-001
+[18/12/2025 12:29:57] admin: Created Purchase Voucher PV-001
+[18/12/2025 13:07:53] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 13:09:06] admin: Created Sales Voucher SV-001
+[18/12/2025 13:10:29] admin: Created Purchase Voucher PV-001
+[18/12/2025 13:12:49] admin: Created Bank Voucher BV-001
+[18/12/2025 13:13:55] admin: Created Cash Voucher CV-001
+[18/12/2025 13:15:22] admin: Created Journal Voucher JV-001
+[18/12/2025 13:25:39] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 13:26:32] admin: Created Sales Voucher SV-001
+[18/12/2025 13:32:13] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 13:33:09] admin: Created Sales Voucher SV-001
+[18/12/2025 13:37:46] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 13:38:32] admin: Created Sales Voucher SV-001
+[18/12/2025 13:50:28] admin: Logged out
+[18/12/2025 13:51:49] admin: Logged in
+[18/12/2025 13:52:03] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 13:53:54] admin: Created Sales Voucher SV-001
+[18/12/2025 14:29:39] admin: Logged out
+[18/12/2025 14:30:59] admin: Logged in
+[18/12/2025 14:31:16] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 14:32:04] admin: Created Sales Voucher SV-001
+[18/12/2025 14:33:36] admin: Created Sales Voucher SV-002
+[18/12/2025 14:45:39] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 14:47:27] admin: Created Sales Voucher SV-001
+[18/12/2025 14:48:19] admin: Created Sales Voucher SV-002
+[18/12/2025 14:59:19] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 15:00:01] admin: Created Sales Voucher SV-001
+[18/12/2025 15:00:40] admin: Created Sales Voucher SV-002
+[18/12/2025 15:02:17] admin: Logged out
+[18/12/2025 15:05:04] admin: Logged in
+[18/12/2025 15:05:14] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 15:05:51] admin: Created Sales Voucher SV-001
+[18/12/2025 15:06:28] admin: Created Sales Voucher SV-002
+[18/12/2025 15:09:06] admin: Created Purchase Voucher PV-001
+[18/12/2025 15:10:39] admin: Created Bank Voucher BV-001
+[18/12/2025 15:12:19] admin: Created Cash Voucher CV-001
+[18/12/2025 15:13:40] admin: Created Journal Voucher JV-001
+[18/12/2025 15:22:17] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 15:22:57] admin: Created Sales Voucher SV-001
+[18/12/2025 15:23:40] admin: Created Sales Voucher SV-002
+[18/12/2025 15:24:30] admin: Deleted Sales Voucher SV-002
+[18/12/2025 15:29:49] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 15:30:26] admin: Created Sales Voucher SV-001
+[18/12/2025 15:50:32] admin: Added item 73
+[18/12/2025 16:05:22] admin: Added item 73
+[18/12/2025 16:06:09] admin: Stock Out: 1.0 73
+[18/12/2025 16:07:25] admin: Stock In: 1.0 73
+[18/12/2025 16:08:39] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 16:09:43] admin: Created Sales Voucher SV-001
+[18/12/2025 18:29:48] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 18:30:35] admin: Created Sales Voucher SV-001
+[18/12/2025 18:36:56] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 18:37:35] admin: Created Sales Voucher SV-001
+[18/12/2025 18:48:56] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 18:49:33] admin: Created Sales Voucher SV-001
+[18/12/2025 19:00:22] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 19:01:05] admin: Created Sales Voucher SV-001
+[18/12/2025 19:14:58] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 19:15:40] admin: Created Sales Voucher SV-001
+[18/12/2025 19:26:43] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 19:27:25] admin: Created Sales Voucher SV-001
+[18/12/2025 19:33:24] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 19:34:04] admin: Created Sales Voucher SV-001
+[18/12/2025 20:39:16] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 20:46:12] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 20:46:47] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 20:48:02] admin: Created Sales Voucher SV-001
+[18/12/2025 20:50:09] admin: Created Purchase Voucher PV-001
+[18/12/2025 20:51:06] admin: Created Bank Voucher BV-001
+[18/12/2025 20:51:43] admin: Created Cash Voucher CV-001
+[18/12/2025 20:52:28] admin: Created Journal Voucher JV-001
+[18/12/2025 20:56:24] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 20:59:38] admin: Logged in
+[18/12/2025 20:59:56] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 21:05:12] admin: Imported Hierarchical Chart of Accounts with Group/Posting
+[18/12/2025 21:06:22] admin: Created Cash Voucher CV-001
+[18/12/2025 21:18:26] admin: Imported Hierarchical Chart of Accounts with Group/Posting
