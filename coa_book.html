@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Chart of Accounts Book{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-primary fw-bold">Chart of Accounts Book</h2>
+    <p class="lead text-muted">Full hierarchical view of all accounts</p>
+
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Accounts Hierarchy (Total root accounts: {{ tree|length }})</h5>
+            <a href="{{ url_for('chart.import_excel') }}" class="btn btn-light btn-sm">Import/Update Excel</a>
+        </div>
+        <div class="card-body">
+            {% if tree %}
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Code</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% macro render_tree(nodes, level=0) %}
+                        {% for node in nodes %}
+                        <tr>
+                            <td style="padding-left: {{ level * 40 }}px; font-weight: {% if node.is_group %}bold{% else %}normal{% endif %};">
+                                {{ node.code }}
+                            </td>
+                            <td style="padding-left: {{ level * 40 }}px; font-weight: {% if node.is_group %}bold{% else %}normal{% endif %}; color: {% if node.is_group %}#0d6efd{% else %}#212529{% endif %};">
+                                {{ node.name }}
+                            </td>
+                        </tr>
+                        {% if node.children %}
+                        {{ render_tree(node.children, level + 1) }}
+                        {% endif %}
+                        {% endfor %}
+                    {% endmacro %}
+
+                    {{ render_tree(tree) }}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="alert alert-warning text-center py-5">
+                <h5>No accounts loaded yet</h5>
+                <p>Your vouchers are safe (they are saved separately). Please upload your Chart of Accounts Excel to see the hierarchy.</p>
+                <a href="{{ url_for('chart.import_excel') }}" class="btn btn-primary mt-3">Upload COA Excel Now</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

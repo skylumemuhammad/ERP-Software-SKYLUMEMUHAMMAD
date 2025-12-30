@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Trial Balance{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-success fw-bold">Trial Balance</h2>
+
+    <div class="card shadow-sm mb-5">
+        <div class="card-body">
+            <form method="post">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Start Date</label>
+                        <input type="date" name="start" class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">End Date</label>
+                        <input type="date" name="end" class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-success btn-lg">View Trial Balance</button>
+                    </div>
+                </div>
+
+                {% if data %}
+                <div class="row mt-4">
+                    <div class="col">
+                        <button type="submit" name="export" value="1" class="btn btn-success me-2">Export Excel</button>
+                        <button type="submit" name="export_pdf" value="1" class="btn btn-danger me-2">Export PDF</button>
+                        <button type="button" class="btn btn-info" onclick="window.print()">Print Trial Balance</button>
+                    </div>
+                </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+    {% if data %}
+    <div id="print-section">
+        <div class="text-center mb-5">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" width="120" class="mb-4">
+            <h2 class="fw-bold">SKYLUME MUHAMMAD (PRIVATE) LIMITED</h2>
+            <h3>Trial Balance</h3>
+            <p class="fs-5"><strong>Date Range:</strong> {{ request.form.start }} to {{ request.form.end }}</p>
+            <hr class="border border-success border-3 opacity-75 w-75 mx-auto mb-5">
+        </div>
+
+        {{ data | safe }}
+    </div>
+    {% else %}
+    <div class="text-center py-5 bg-light rounded">
+        <p class="text-muted fs-4">Select dates and click "View Trial Balance" to generate the report.</p>
+        <p class="text-muted">Grand Total will always be shown (0.00 if no transactions).</p>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        #print-section, #print-section * {
+            visibility: visible;
+        }
+        #print-section {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+        .navbar, form, .card {
+            display: none !important;
+        }
+        .table {
+            font-size: 12px;
+        }
+    }
+</style>
+{% endblock %}

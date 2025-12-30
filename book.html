@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}{{ book_name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Header with Logo & Company -->
+    <div class="text-center mb-4">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" width="120" height="120" class="mb-3">
+        <h3 class="fw-bold">SKYLUME MUHAMMAD (PRIVATE) LIMITED</h3>
+        <h4 class="text-muted">{{ book_name }}</h4>
+        {% if request.form.start and request.form.end %}
+        <p class="text-muted fw-bold">Period: {{ request.form.start }} to {{ request.form.end }}</p>
+        {% endif %}
+        <hr class="my-3">
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Select Date Range</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Start Date</label>
+                        <input type="date" name="start" class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">End Date</label>
+                        <input type="date" name="end" class="form-control" required>
+                    </div>
+                    <div class="col-md-4 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">Generate Book</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if data %}
+    <div class="card shadow">
+        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">{{ book_name }} Entries</h5>
+            <div>
+                <form method="post" class="d-inline">
+                    <input type="hidden" name="start" value="{{ request.form.start }}">
+                    <input type="hidden" name="end" value="{{ request.form.end }}">
+                    <button type="submit" name="export" class="btn btn-light btn-sm me-2">Export Excel</button>
+                    <button type="submit" name="export_pdf" class="btn btn-light btn-sm">Export PDF</button>
+                </form>
+            </div>
+        </div>
+        <div class="card-body">
+            {{ data | safe }}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Print style -->
+<style>
+@media print {
+    .no-print { display: none !important; }
+    .print-header { margin-bottom: 20px; }
+    body { font-family: Arial, sans-serif; }
+}
+</style>
+{% endblock %}

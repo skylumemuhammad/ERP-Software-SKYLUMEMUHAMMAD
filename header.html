@@ -1,0 +1,11 @@
+<div class="text-center mb-4 print-header">
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" width="120" height="120" class="mb-3">
+    <h3 class="fw-bold">SKYLUME MUHAMMAD (PRIVATE) LIMITED</h3>
+    <h5 class="text-muted">{{ book_name or report_title }}</h5>
+    {% if period %}
+    <p class="text-muted fw-bold">Period: {{ period }}</p>
+    {% elif start and end %}
+    <p class="text-muted fw-bold">Period: {{ start }} to {{ end }}</p>
+    {% endif %}
+    <hr class="my-3">
+</div>

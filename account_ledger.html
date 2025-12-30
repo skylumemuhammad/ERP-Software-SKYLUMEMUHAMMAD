@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}General Ledger{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-primary fw-bold">General Ledger</h2>
+
+    <div class="card shadow mb-4">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Select Account & Date Range</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-5">
+                        <label class="form-label fw-bold">Select Account</label>
+                        <select name="account" class="form-select" required>
+                            <option value="">-- Select Account --</option>
+                            {% for acc in accounts %}
+                            <option value="{{ acc.code }}" {% if selected_account and selected_account.code == acc.code %}selected{% endif %}>
+                                {{ acc.name }} ({{ acc.code }})
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">Start Date</label>
+                        <input type="date" name="start" class="form-control" value="{{ start }}" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">End Date</label>
+                        <input type="date" name="end" class="form-control" value="{{ end }}" required>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="submit" class="btn btn-primary w-100">View</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if ledger_data %}
+    <div class="card shadow">
+        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">General Ledger Report</h5>
+            <div>
+                <form method="post" class="d-inline">
+                    <input type="hidden" name="start" value="{{ start }}">
+                    <input type="hidden" name="end" value="{{ end }}">
+                    <input type="hidden" name="account" value="{{ selected_account.code if selected_account else '' }}">
+                    <button type="submit" name="export_excel" class="btn btn-light btn-sm me-2">Export Excel</button>
+                    <button type="submit" name="export_pdf" class="btn btn-light btn-sm">Export PDF</button>
+                </form>
+            </div>
+        </div>
+        <div class="card-body">
+            {{ ledger_data | safe }}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

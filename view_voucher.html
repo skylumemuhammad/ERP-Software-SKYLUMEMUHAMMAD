@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}View {{ voucher_type_name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4" id="print-section">
+    <div class="text-center mb-5">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Company Logo" width="120" class="mb-4">
+        <h2 class="fw-bold">SKYLUME MUHAMMAD (PRIVATE) LIMITED</h2>
+        <h3>{{ voucher_type_name }} - {{ voucher.prefix }}</h3>
+        <p class="fs-5"><strong>Date:</strong> {{ voucher.date.strftime('%d/%m/%Y') }}</p>
+        {% if voucher.cheque_no %}
+        <p class="fs-5"><strong>Cheque No:</strong> {{ voucher.cheque_no }}</p>
+        {% endif %}
+        {% if voucher.cheque_date %}
+        <p class="fs-5"><strong>Cheque Date:</strong> {{ voucher.cheque_date.strftime('%d/%m/%Y') }}</p>
+        {% endif %}
+        <hr class="border border-primary border-3 opacity-75 w-50 mx-auto mb-5">
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-primary">
+            <tr>
+                <th>Account Name</th>
+                <th>Description</th>
+                <th>Debit</th>
+                <th>Credit</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for line in lines_with_names %}
+            <tr>
+                <td>{{ line.account_name }}</td>
+                <td>{{ line.description }}</td>
+                <td class="text-end">{{ "%.2f"|format(line.debit) }}</td>
+                <td class="text-end">{{ "%.2f"|format(line.credit) }}</td>
+            </tr>
+            {% endfor %}
+            <tr class="table-info fw-bold fs-5">
+                <td colspan="2" class="text-end">Total</td>
+                <td class="text-end">{{ "%.2f"|format(total_debit) }}</td>
+                <td class="text-end">{{ "%.2f"|format(total_credit) }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="text-center mt-5">
+        <button class="btn btn-info btn-lg me-4" onclick="window.print()">Print Voucher</button>
+        <a href="{{ url_for('reports.export_voucher_pdf', vtype=vtype, index=index) }}" class="btn btn-danger btn-lg">Export PDF</a>
+    </div>
+</div>
+
+<style>
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        #print-section, #print-section * {
+            visibility: visible;
+        }
+        #print-section {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+        .navbar {
+            display: none !important;
+        }
+    }
+</style>
+{% endblock %}
